@@ -1,0 +1,50 @@
+ ListNode *cur,*prev;
+    int count;
+    vector<int> arr;
+    arr.push_back(-1);
+    if(A==NULL || A->next==NULL){
+        return A;
+    }
+    prev = A;
+    cur = A->next;
+    while(cur!=NULL){
+        if(prev->val == cur->val){
+            if(arr.back()!=prev->val){
+                arr.push_back(prev->val);
+            }
+            cur = cur->next;
+            delete prev->next;
+            prev->next = cur;
+        }else{
+            prev = cur;
+            cur = cur->next;
+        }
+    }
+    // return A;
+    arr.erase(arr.begin());
+    if(arr.size()==0){
+        return A;
+    }
+    int n;
+    n = arr.size();
+    int i=0;
+    cur = A;
+    while(i<n && cur->val==arr[i]){
+        A=cur->next;
+        delete cur;
+        cur = A;
+        i++;
+    }
+    prev = cur;
+    while(i<n && cur!=NULL){
+        if(cur->val == arr[i]){
+            cur = cur->next;
+            delete prev->next;
+            prev->next =cur;
+            i++;
+        }else{
+            prev = cur;
+            cur = cur->next;
+        }
+    }
+    return A;
